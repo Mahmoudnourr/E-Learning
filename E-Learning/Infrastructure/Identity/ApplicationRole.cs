@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Infrastructure.Identity
 {
-    public class Enrollment
+    public class ApplicationRole
     {
-        public Guid Id { get; private set; }
+        
     }
 }

@@ -7,18 +7,39 @@ namespace Domain.Entities.RefreshToken
 {
     public class RefreshToken
     {
-        public int Id { get; set; }
-        public string TokenHash { get; set; } = default!;
-        public DateTime ExpiresAt { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? RevokedAt { get; set; }
-        public bool IsRevoked { get; set; }
+        public Guid Id { get; private set; }
 
-        public bool IsExpired => DateTime.UtcNow >= ExpiresAt;
-        public bool IsActive => !IsExpired && !IsRevoked;
+        public Guid UserId { get; private set; }
 
-        // Navigation property
-        public Guid UserId { get; set; }
-        public User User { get; set; }
+        public string TokenHash { get; private set; }
+
+        public DateTime ExpiresAt { get; private set; }
+
+        public DateTime? RevokedAt { get; private set; }
+
+        public bool IsActive =>
+            RevokedAt == null &&
+            ExpiresAt > DateTime.UtcNow;
+
+        private RefreshToken() { }
+
+        public static RefreshToken Create(
+            Guid userId,
+            string tokenHash,
+            DateTime expiresAt)
+        {
+            return new RefreshToken
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                TokenHash = tokenHash,
+                ExpiresAt = expiresAt
+            };
+        }
+
+        public void Revoke()
+        {
+            RevokedAt = DateTime.UtcNow;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Entities.RefreshToken;
+using Domain.Enums;
 namespace Domain.Entities
 {
     public class User
@@ -10,18 +11,21 @@ namespace Domain.Entities
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Email { get; private set; }
+        public UserRole Role { get; private set; }
+        public bool IsActive { get; private set; }
         private readonly List<RefreshToken.RefreshToken> _refreshTokens = new();
         public IReadOnlyCollection<RefreshToken.RefreshToken> RefreshTokens
             => _refreshTokens.AsReadOnly();
         private User() { }
 
-        public static User Create(string name, string email)
+        public static User Create(string name, string email, UserRole role)
         {
             return new User
             {
                 Id = Guid.NewGuid(),
                 Name = name,
-                Email = email
+                Email = email,
+                Role = role
             };
         }
 
@@ -44,6 +48,27 @@ namespace Domain.Entities
         }
 
 
+       public void UpdateProfile(
+       string name,
+       string email)
+        {
+            Name = name;
+            Email = email;
+        }
 
+        public void ChangeRole(UserRole role)
+        {
+            Role = role;
+        }
+
+        public void Activate()
+        {
+            IsActive = true;
+        }
+
+        public void Deactivate()
+        {
+            IsActive = false;
+        }
     }
 }
