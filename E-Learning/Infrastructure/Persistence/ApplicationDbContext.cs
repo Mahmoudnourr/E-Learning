@@ -17,6 +17,12 @@ namespace Infrastructure.Persistence
         public DbSet<User> Users => Set<User>();
   
         protected override void OnModelCreating( ModelBuilder builder) { base.OnModelCreating(builder);
+         builder.Entity<ApplicationUser>()
+        .HasOne(x => x.DomainUser)
+        .WithOne()
+        .HasForeignKey<ApplicationUser>(
+            x => x.DomainUserId)
+        .OnDelete(DeleteBehavior.Cascade);
 
         builder.ApplyConfigurationsFromAssembly(
             typeof(ApplicationDbContext).Assembly); }

@@ -9,7 +9,7 @@ public static class IdentityServiceExtensions
 {
     public static IServiceCollection AddCustomIdentity(this IServiceCollection services)
     {
-        services
+     services
      .AddIdentityCore<ApplicationUser>(options =>
      {
          options.User.RequireUniqueEmail = true;
