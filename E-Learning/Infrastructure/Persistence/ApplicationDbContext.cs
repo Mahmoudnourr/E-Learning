@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Abstractions.Persistence;
 using Domain.Entities;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -17,12 +18,12 @@ namespace Infrastructure.Persistence
         public DbSet<User> Users => Set<User>();
   
         protected override void OnModelCreating( ModelBuilder builder) { base.OnModelCreating(builder);
-         builder.Entity<ApplicationUser>()
-        .HasOne(x => x.DomainUser)
-        .WithOne()
-        .HasForeignKey<ApplicationUser>(
-            x => x.DomainUserId)
-        .OnDelete(DeleteBehavior.Cascade);
+        builder.Entity<ApplicationUser>()
+    .HasOne(x => x.DomainUser)
+    .WithOne()
+    .HasForeignKey<ApplicationUser>(
+        x => x.DomainUserId)
+    .OnDelete(DeleteBehavior.Cascade);
 
         builder.ApplyConfigurationsFromAssembly(
             typeof(ApplicationDbContext).Assembly); }

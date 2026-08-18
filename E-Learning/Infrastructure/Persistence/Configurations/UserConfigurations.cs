@@ -10,24 +10,25 @@ namespace Infrastructure.Persistence.Configurations
 {
     public class UserConfiguration
     : IEntityTypeConfiguration<User>
-{
-    public void Configure(
-        EntityTypeBuilder<User> builder)
     {
-        builder.HasKey(x => x.Id);
+        public void Configure(
+            EntityTypeBuilder<User> builder)
+        {
+            builder.HasKey(x => x.Id); ;
 
-        builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(100);
 
-        builder.Property(x => x.Email)
-            .IsRequired()
-            .HasMaxLength(256);
+            builder.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(100);
 
-        builder.HasMany(x => x.RefreshTokens)
-            .WithOne()
-            .HasForeignKey(x => x.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            builder.Property(x => x.Email)
+                .IsRequired()
+                .HasMaxLength(256);
+
+            builder.HasMany(x => x.RefreshTokens)
+                   .WithOne()
+                   .HasForeignKey(x => x.UserId)
+                   .OnDelete(DeleteBehavior.Cascade);
+        }
     }
-}
 }

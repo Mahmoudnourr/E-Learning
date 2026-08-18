@@ -9,8 +9,8 @@ namespace Infrastructure.Identity
 {
     public class ApplicationUser :IdentityUser<Guid>
     {
-         public Guid DomainUserId { get; set; }
 
-         public User DomainUser { get; set; } = null!;
+         public Guid DomainUserId { get; set; }
+         public User? DomainUser { get; set; }
     }
 }
